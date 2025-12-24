@@ -1,9 +1,19 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import About from "./components/About";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Login from "./pages/Login";
 
 function App() {
   return (
-   <About />
+    <Router>
+      <Navbar />
+
+      <Routes>
+        <Route path="/" element={<Hero />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
   );
 }
 
