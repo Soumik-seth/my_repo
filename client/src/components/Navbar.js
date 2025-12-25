@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 
 function Navbar() {
+  const isLoggedIn = localStorage.getItem("token");   // later use real auth
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -20,13 +22,35 @@ function Navbar() {
 
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
+        
+                    {/* Go to Home page (Home page) */}
+            {isLoggedIn && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/">
+                  Home
+                </Link>
+              </li>
+            )}
 
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                Login
-              </Link>
-            </li>
+            {/* Show All Books (only after login) */}
+            {isLoggedIn && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/books">
+                  Show All Books
+                </Link>
+              </li>
+            )}
 
+            {/* Login */}
+            {!isLoggedIn && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">
+                  Login
+                </Link>
+              </li>
+            )}
+
+            {/* Facebook */}
             <li className="nav-item">
               <a
                 className="nav-link"
@@ -38,6 +62,7 @@ function Navbar() {
               </a>
             </li>
 
+            {/* Contact */}
             <li className="nav-item">
               <a className="nav-link" href="#contact">
                 Contact Us
