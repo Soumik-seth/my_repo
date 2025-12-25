@@ -24,13 +24,13 @@ function Navbar() {
           <ul className="navbar-nav ms-auto">
         
                     {/* Go to Home page (Home page) */}
-            {isLoggedIn && (
+             (
               <li className="nav-item">
                 <Link className="nav-link" to="/">
                   Home
                 </Link>
               </li>
-            )}
+            )
 
             {/* Show All Books (only after login) */}
             {isLoggedIn && (
