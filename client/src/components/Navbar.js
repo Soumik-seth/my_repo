@@ -36,7 +36,7 @@ function Navbar() {
             {isLoggedIn && (
               <li className="nav-item">
                 <Link className="nav-link" to="/books">
-                  Show All Books
+                  Show All B
                 </Link>
               </li>
             )}
