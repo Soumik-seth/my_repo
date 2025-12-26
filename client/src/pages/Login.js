@@ -1,47 +1,42 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { login, registerUser } from "../api";
 
-function Login() {
-  return (
-    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "90vh" }}>
-      <div className="card shadow p-4" style={{ width: "380px" }}>
-        
-        <h3 className="text-center mb-3">Login</h3>
-        <p className="text-center text-muted mb-4">
-          Welcome back! Please login to continue.
-        </p>
+function Login(){
 
-        <div className="mb-3">
-          <label className="form-label">Email</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Enter your email"
-          />
-        </div>
+  const [isRegister,setIsRegister]=useState(false);
+  const [form,setForm]=useState({name:"",email:"",password:""});
 
-        <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter your password"
-          />
-        </div>
+  function handle(e){ setForm({...form,[e.target.name]:e.target.value}); }
 
-        <button className="btn btn-primary w-100 mb-3">
-          Login
-        </button>
+  async function submit(){
+    const res = isRegister ? await registerUser(form) : await login(form);
+    if(res.token){
+      localStorage.setItem("token",res.token);
+      localStorage.setItem("role",res.role);
+      window.location.href = "/";
+    }
+    alert(res.msg || "Success");
+  }
 
-        <p className="text-center">
-          Don’t have an account?{" "}
-          <Link to="/register" className="text-primary fw-bold">
-            Click here
-          </Link>
-        </p>
+  return(
+    <div className="container mt-5" style={{maxWidth:"400px"}}>
+      <h3>{isRegister ? "Register" : "Login"}</h3>
 
-      </div>
+      {isRegister && (
+        <input name="name" className="form-control mb-2" placeholder="Name" onChange={handle}/>
+      )}
+
+      <input name="email" className="form-control mb-2" placeholder="Email" onChange={handle}/>
+      <input name="password" className="form-control mb-2" placeholder="Password" type="password" onChange={handle}/>
+
+      <button className="btn btn-primary w-100" onClick={submit}>
+        {isRegister ? "Register" : "Login"}
+      </button>
+
+      <p className="text-center mt-2" onClick={()=>setIsRegister(!isRegister)}>
+        {isRegister ? "Already have account? Login" : "Don't have account? Register"}
+      </p>
     </div>
   );
 }
-
 export default Login;

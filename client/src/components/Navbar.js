@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom";
+const role = localStorage.getItem("role");
+
+
 
 function Navbar() {
   const isLoggedIn = localStorage.getItem("token");   // later use real auth
@@ -68,7 +71,11 @@ function Navbar() {
                 Contact Us
               </a>
             </li>
-
+            <li className="nav-item">
+            {role==="admin" && (
+  <Link className="nav-link" to="/admin">Admin</Link>
+)}
+</li>
           </ul>
         </div>
       </div>
