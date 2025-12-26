@@ -67,9 +67,9 @@ function Navbar() {
 
             {/* Contact */}
             <li className="nav-item">
-              <a className="nav-link" href="#contact">
-                Contact Us
-              </a>
+             <Link className="nav-link" to="/Contact">
+                  Contact Us
+                </Link>
             </li>
             <li className="nav-item">
             {role==="admin" && (
