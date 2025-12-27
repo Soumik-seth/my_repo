@@ -1,42 +1,46 @@
 import { useState } from "react";
-import { login, registerUser } from "../api";
+import { login } from "../api";
+import { useNavigate, Link } from "react-router-dom";
+function Login() {
+  const [data, setData] = useState({ email: "", password: "" });
+  //set the data 
+  function handel(e) {
+    setData({ ...data, [e.target.name]: e.target.value })
+  }
+  //for summit the data
+  async function submit() {
+    const res = await login(data);
+    if (res.token) {
+      localStorage.setItem("token", res.token);
+      localStorage.setItem("role", res.role);
+      if (res.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/user");
+      }
+    }}
 
-function Login(){
+    return (
+      <div className="container mt-5"
+        style={{ maxWidth: "400px" }}>
+        <h3>Login</h3>
+        {/*input for email*/}
+        <input name="email"
+          placeholder="Enter your Email" className="form-control mb-2"
+          onChange={handel} />
+        {/*input for password*/}
+        <input type="password" name="password"
+          placeholder="Enter your Password" className="form-control mb-2"
+          onChange={handel} />
+      //button to submit
+        <button className="btn btn-primary w-100"
+          onClick={submit}>Submit</button>
 
-  const [isRegister,setIsRegister]=useState(false);
-  const [form,setForm]=useState({name:"",email:"",password:""});
-
-  function handle(e){ setForm({...form,[e.target.name]:e.target.value}); }
-
-  async function submit(){
-    const res = isRegister ? await registerUser(form) : await login(form);
-    if(res.token){
-      localStorage.setItem("token",res.token);
-      localStorage.setItem("role",res.role);
-      window.location.href = "/";
-    }
-    alert(res.msg || "Success");
+        <p className="text-center mt-2">
+          Don't have an account? <Link to="/register">Register here</Link>
+        </p>
+      </div>
+    );
   }
 
-  return(
-    <div className="container mt-5" style={{maxWidth:"400px"}}>
-      <h3>{isRegister ? "Register" : "Login"}</h3>
-
-      {isRegister && (
-        <input name="name" className="form-control mb-2" placeholder="Name" onChange={handle}/>
-      )}
-
-      <input name="email" className="form-control mb-2" placeholder="Email" onChange={handle}/>
-      <input name="password" className="form-control mb-2" placeholder="Password" type="password" onChange={handle}/>
-
-      <button className="btn btn-primary w-100" onClick={submit}>
-        {isRegister ? "Register" : "Login"}
-      </button>
-
-      <p className="text-center mt-2" onClick={()=>setIsRegister(!isRegister)}>
-        {isRegister ? "Already have account? Login" : "Don't have account? Register"}
-      </p>
-    </div>
-  );
-}
 export default Login;
