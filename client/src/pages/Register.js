@@ -3,11 +3,12 @@ import { registerUser } from "../api";
 import { useNavigate, Link } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate();
   const [data, setData] = useState({ name: "", email: "", password: "" });
   function handel(e) {
     setData({ ...data, [e.target.name]: e.target.value });
   }
-  function submit() {
+  async function submit() {
     const res = registerUser(data);
     if (res.token) {
       localStorage.setItem("token", res.token);

@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { login } from "../api";
 import { useNavigate, Link } from "react-router-dom";
+
 function Login() {
+  const navigate = useNavigate();
   const [data, setData] = useState({ email: "", password: "" });
   //set the data 
   function handel(e) {
@@ -32,7 +34,7 @@ function Login() {
         <input type="password" name="password"
           placeholder="Enter your Password" className="form-control mb-2"
           onChange={handel} />
-      //button to submit
+      {/*button to submit*/}
         <button className="btn btn-primary w-100"
           onClick={submit}>Submit</button>
 
