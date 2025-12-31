@@ -33,6 +33,26 @@ function AdminDashboard(){
     setNewBook({title:"",author:"",img:""});
     alert("Book added successfully!");
   }
+  // Delete Book function
+  const deleteBook=(id)=>{
+    setBooks(books.filter(b=>b.id !== id));
+  }
+  //  const deleteBook=(id)=>{
+   // const fil=books.filter(b.id !== id);
+    // setBooks(fil);
+  //}
+  // Approve Return function
+  const approveReturn=(id)=>{
+    setBooks(
+      books.map(b=>{
+        if(b.id === id){
+          return {...b,status:"Available", borrowedBy:""};
+        }else{
+          return b;
+        }
+      })
+    )
+  }
    return(
    <div className="container mt-4">
     <h2 className="text-center mb-3">⚙️ Admin Dashboard</h2>
@@ -50,7 +70,37 @@ function AdminDashboard(){
        <button className="btn btn-success"
        onClick={addBook}>Add Book</button>
     </div>
+     
+     {/* List of all books */}
+     <h4>Books List</h4>
+     <div className="row">
+      {books.map(b=>(
+         <div className="col-md-4" key={b.id}>
+            <div className="card mb-3">
+              <img src={b.img} className="card-img-top"/>
+              <div  className="card-body">
+                <h5>{b.title}</h5>
+                <p>{b.author}</p>
+                <p>Status: {b.status}</p>
+                {b.borrowedBy && <p>Borrowed By: {b.borrowedBy}</p>}
+                     {/*Delete Book button*/}
+     <button className="btn btn-danger w-100 mb-2" onClick={()=>deleteBook(b.id)}>
+                  Delete
+                </button>
+                {/*Approve return button*/}
+                             {b.status==="Borrowed" && (
+                  <button className="btn btn-warning w-100" onClick={()=>approveReturn(b.id)}>
+                    Approve Return
+                  </button>)}
+              </div>
+            </div>
+         </div>
+      ))}
+     </div>
 
+
+
+   
    </div>
   );
 }
