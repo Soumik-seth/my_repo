@@ -23,6 +23,11 @@ function AdminDashboard(){
   });
   // Add Book function
   const addBook=()=>{
+     if(!newBook.title || !newBook.author || !newBook.img ){
+      alert("Please fill all fields");
+      return;
+     }
+
     setBooks([...books,{id:books.length+1,...newBook,status:"Available", borrowedBy:""}]);
     //clearform
     setNewBook({title:"",author:"",img:""});
