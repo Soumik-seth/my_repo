@@ -3,7 +3,9 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');   // <-- ADD THIS
-
+const authRoutes = require('./routes/auth'); // <-- ADD THIS
+const userRoutes = require('./routes/user'); // <-- ADD THIS
+const adminRoutes = require('./routes/admin'); // <-- ADD THIS
 const app = express();
 
 app.use(cors());
@@ -18,6 +20,11 @@ mongoose.connect(process.env.MONGO_URI)
 
 // test route
 app.get('/api/ping', (req, res) => res.json({ msg: 'pong' }));
+
+// routes
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/admin', adminRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
