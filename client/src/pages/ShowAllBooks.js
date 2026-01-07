@@ -1,89 +1,84 @@
-import { useEffect, useState } from "react";
+import { useEffect,useState } from "react";
+import { getBooks, borrowBookAPI, returnBookAPI } from "../api";
 import { useNavigate } from "react-router-dom";
 
 function ShowAllBooks(){
 
-  const navigate = useNavigate();
-  const role = localStorage.getItem("role");
+ const navigate = useNavigate();
+ const token = localStorage.getItem("token");
+ const role = localStorage.getItem("role");
 
-  useEffect(()=>{
-      if(!localStorage.getItem("token")){
-        alert("Login first");
-        navigate("/login");
-      }
-      if(role === "admin"){
-        navigate("/admin");
-      }
-  },[]);
+ const [search,setSearch]=useState("");
+ const [books,setBooks]=useState([]);
 
-  const [search,setSearch] = useState("");
+ useEffect(()=>{
+   if(!token){
+     alert("Login First");
+     navigate("/login");
+     return;
+   }
+   if(role==="admin"){
+     navigate("/admin");
+     return;
+   }
 
-  const [books,setBooks] = useState([
-    {id:1,title:"Harry Potter",author:"J.K Rowling",img:"https://picsum.photos/200?1", borrowed:false},
-    {id:2,title:"Rich Dad Poor Dad",author:"Robert Kiyosaki",img:"https://picsum.photos/200?2", borrowed:false},
-    {id:3,title:"Atomic Habits",author:"James Clear",img:"https://picsum.photos/200?3", borrowed:false}
-  ]);
+   getBooks(token).then(setBooks);
+ },[]);
 
-  function borrowBook(id){
-    setBooks(
-      books.map(b => 
-        b.id === id ? {...b, borrowed:true} : b
-      )
-    );
-    alert("Book Borrowed!");
-  }
+ const filtered = books.filter(b =>
+   b.title.toLowerCase().includes(search.toLowerCase()) ||
+   b.author.toLowerCase().includes(search.toLowerCase())
+ );
 
-  function returnBook(id){
-    setBooks(
-      books.map(b => 
-        b.id === id ? {...b, borrowed:false} : b
-      )
-    );
-    alert("Book Returned!");
-  }
+ async function borrow(id){
+   const res = await borrowBookAPI(id,token);
+   alert(res.msg);
+ }
 
-  const filtered = books.filter(b =>
-    b.title.toLowerCase().includes(search.toLowerCase())
-  );
+ async function returnB(id){
+   const res = await returnBookAPI(id,token);
+   alert(res.msg);
+ }
 
-  return(
-    <div className="container mt-4">
-      <h2 className="text-center">📚 All Books</h2>
+ return(
+  <div className="container mt-3">
 
-      <input 
-        className="form-control mb-3"
-        placeholder="Search Book"
-        value={search}
-        onChange={e=>setSearch(e.target.value)}
-      />
+   <h2>Books</h2>
 
-      <div className="row">
-        {filtered.map(book=>(
-          <div className="col-md-4" key={book.id}>
-            <div className="card mb-3">
-              <img src={book.img} className="card-img-top"/>
-              <div className="card-body">
-                <h5>{book.title}</h5>
-                <p>{book.author}</p>
+   <input className="form-control mb-2"
+     value={search}
+     onChange={e=>setSearch(e.target.value)}
+   />
 
-                {!book.borrowed ? (
-                  <button className="btn btn-primary w-100" onClick={()=>borrowBook(book.id)}>
-                    Borrow
-                  </button>
-                ):(
-                  <button className="btn btn-warning w-100" onClick={()=>returnBook(book.id)}>
-                    Return
-                  </button>
-                )}
+   <div className="row">
 
-              </div>
-            </div>
-          </div>
-        ))}
+    {filtered.map(b=>(
+      <div className="col-md-4" key={b.id}>
+
+       <div className="card mb-2">
+         <img src={b.img} className="card-img-top"/>
+
+         <div className="card-body">
+
+           <h5>{b.title}</h5>
+           <p>{b.author}</p>
+
+           {b.borrowed ? (
+             <button className="btn btn-warning w-100"
+               onClick={()=>returnB(b.id)}>Return</button>
+           ):(
+             <button className="btn btn-primary w-100"
+               onClick={()=>borrow(b.id)}>Borrow</button>
+           )}
+
+         </div>
+       </div>
+
       </div>
+    ))}
 
-    </div>
-  );
+   </div>
+  </div>
+ );
 }
-
 export default ShowAllBooks;
