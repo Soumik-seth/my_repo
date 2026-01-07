@@ -25,8 +25,11 @@ router.post('/register',async (req,res)=>{
             password:hash
 
         });
-        const token = jwt.sign({id:newUser._id},JWT,{expiresIn:'1d'});
-        res.status(201).json({token});
+        const token = jwt.sign({id:newUser._id,role:newUser.role},JWT,{expiresIn:'1d'});
+        res.status(201).json({token,
+            role:newUser.role,
+            msg:'Registered successfully'
+        });
       
     }
 
@@ -34,3 +37,34 @@ router.post('/register',async (req,res)=>{
         res.status(500).json({message:'server error'});
     }
 });
+// Login
+router.post('/login',async(req,res)=>{
+    const {email,password}=req.body;
+    try{
+     // check if user exits
+     const user = await User.findOne({email});
+     if(!user){
+        return res.status(400).json({message:'user not found'});
+
+     }else{
+        //check password
+        const isMatch = await bcrypt.compare(password,user.password);
+       if(!isMatch){
+       return res.status(400).json({message:'invalid credentials'});
+       }
+       else{
+        const token = jwt.sign({id:user._id,role:user.role},
+            JWT
+
+        );
+        res.status(200).json({token,
+            role:user.role,
+            msg:'Logged in successfully'
+        });
+       }
+     }
+    }catch(err){
+        res.status(500).json({message:'server error'});
+    }
+});
+module.exports = router;
