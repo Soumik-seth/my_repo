@@ -3,63 +3,31 @@ import { registerUser } from "../api";
 import { useNavigate, Link } from "react-router-dom";
 
 function Register(){
+  const [data,setData] = useState({name:"",email:"",password:""});
+  const navigate = useNavigate();
 
- const navigate = useNavigate();
+  const submit = async () => {
+    const res = await registerUser(data);
+    if(res.msg){
+      alert(res.msg);
+      navigate("/login");
+    }
+  };
 
- const [data,setData] = useState({
-   name:"",
-   email:"",
-   password:""
- });
-
- function handel(e){
-   setData({...data,[e.target.name]:e.target.value});
- }
-
- async function submit(){
-
-   const res = await registerUser(data);
-
-   alert(res.msg);
-
-   if(res.token){
-     localStorage.setItem("token",res.token);
-     localStorage.setItem("role",res.role);
-
-     if(res.role==="admin"){
-        navigate("/admin");
-     }else{
-        navigate("/books");
-     }
-   }
- }
-
- return(
-  <div className="container mt-5" style={{maxWidth:"400px"}}>
-
-   <h3>Create Account</h3>
-
-   <input name="name" className="form-control mb-2"
-     placeholder="Name" onChange={handel}/>
-
-   <input name="email"
-     className="form-control mb-2"
-     placeholder="Email" onChange={handel}/>
-
-   <input type="password"
-     name="password"
-     className="form-control mb-2"
-     placeholder="Password" onChange={handel}/>
-
-   <button className="btn btn-success w-100" onClick={submit}>
-     Register
-   </button>
-
-   <p className="text-center mt-2">
-     Already have account? <Link to="/login">Login</Link>
-   </p>
-
-  </div>
- );
+  return (
+    <div className="container mt-5" style={{maxWidth:"400px"}}>
+      <h3>Register</h3>
+      <input className="form-control mb-2" placeholder="Name"
+        onChange={e=>setData({...data,name:e.target.value})}/>
+      <input className="form-control mb-2" placeholder="Email"
+        onChange={e=>setData({...data,email:e.target.value})}/>
+      <input type="password" className="form-control mb-2" placeholder="Password"
+        onChange={e=>setData({...data,password:e.target.value})}/>
+      <button className="btn btn-success w-100" onClick={submit}>Register</button>
+      <p className="mt-2 text-center">
+        Have account? <Link to="/login">Login</Link>
+      </p>
+    </div>
+  );
 }
 export default Register;
