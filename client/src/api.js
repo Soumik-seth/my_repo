@@ -27,7 +27,7 @@ export const borrowBook = (id,token)=>{
       method:"POST",
 
     }
-  )
+  ).then(r=>r.json());
 }
 // for return book
 export const returnBook =(id,token)=>{
@@ -37,3 +37,27 @@ export const returnBook =(id,token)=>{
   }
   ).then(r=>r.json())
 }
+/// Admin APIs
+const AdminAddBook =(data,token)=>{
+  fetch(`${API}/book/add`,{
+    method:"POST",
+    headers:{
+      "content-Type":"application/json",
+      Authorization:`Bearer ${token}`
+    },
+    body:JSON.stringify(data)
+
+  }).then(r=>r.json());
+};
+//Admin delete book
+const AdminDeleteBook = (id,token)=>{
+  fetch(`${API}/books/delete/${id}`,{
+    method:"DELETE",
+    headers:{Authorization:`Bearer ${token}` }
+  }).then(r=>r.json());
+};
+//admin get all books
+export const adminGetBooks = (token) =>
+  fetch(`${API}/admin/all`, {
+    headers: { Authorization: `Bearer ${token}` },
+  }).then(res => res.json());
