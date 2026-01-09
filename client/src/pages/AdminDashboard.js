@@ -13,10 +13,7 @@ function AdminDashboard(){
     }
   },[]);
 
-  const [books,setBooks] = useState([
-    {id:1,title:"Harry Potter",author:"J.K Rowling",img:"https://picsum.photos/200?1", borrowedBy:"Soumik", status:"Borrowed"},
-    {id:2,title:"Rich Dad Poor Dad",author:"Robert Kiyosaki",img:"https://picsum.photos/200?2", borrowedBy:"", status:"Available"}
-  ]);
+  const [books,setBooks] = useState([]);
 
   const [newBook,setNewBook] = useState({
     title:"",
