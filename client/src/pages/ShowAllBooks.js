@@ -6,13 +6,17 @@ function ShowAllBooks() {
   const [books, setBooks] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    const role = localStorage.getItem("role");
-    if(role !== "admin"){
-      alert("Only Admin Allowed");
-      navigate("/");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    // 🔒 If not logged in → redirect to login
+    if (!token) {
+      navigate("/login");
+      return;
     }
-  },[]);
+
+    getBooks().then(setBooks);
+  }, [navigate]);
 
   const handleBorrow = async (id) => {
     await borrowBook(id);
