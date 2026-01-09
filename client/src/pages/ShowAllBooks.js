@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import { getBooks, borrowBook, returnBook } from "../api";
-
+import { useNavigate } from "react-router-dom";
 function ShowAllBooks(){
   const [books,setBooks] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(()=>{
-    getBooks().then(setBooks);
-  },[]);
+   const token =localStorage.getItem('token');
+    if(!token){
+      navigate('/login');
+      return;
+    }else{
+      getBooks().then(setBooks);
+    }
+  },[navigate]);
 
   return (
     <div className="container mt-4">
