@@ -16,7 +16,7 @@ function AdminDashboard(){
     const role = localStorage.getItem("role");
     if(role !== "admin"){
       
-      
+      navigate("/login");
     }
     getAllBooksAdmin().then(setBooks);
   },[]);
