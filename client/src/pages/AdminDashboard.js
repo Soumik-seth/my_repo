@@ -1,50 +1,38 @@
 import { useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { addBook,deleteBook } from "../api";
+import { addBook,deleteBook ,getAllBooksAdmin} from "../api";
 function AdminDashboard(){
 
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    const role = localStorage.getItem("role");
-    if(role !== "admin"){
-      
-      navigate("/");
-    }
-  },[]);
-
-  const [books,setBooks] = useState([]);
+    const [books,setBooks] = useState([]);
 
   const [newBook,setNewBook] = useState({
     title:"",
     author:"",
     img:""
   });
+  useEffect(()=>{
+    const role = localStorage.getItem("role");
+    if(role !== "admin"){
+      
+      
+    }
+    getAllBooksAdmin().then(setBooks);
+  },[]);
 
-  const addBook = ()=>{
-    if(!newBook.title || !newBook.author || !newBook.img){
-      alert("Please fill all fields");
-      return;
+
+
+  const add = async()=>{
+      await addBook(newBook);
+      setBooks(await getAllBooksAdmin());
     }
 
-    setBooks([...books,{id:Date.now(),...newBook,status:"Available",borrowedBy:""}]);
-    setNewBook({title:"",author:"",img:""});
-    alert("Book added successfully!");
-  };
 
-  const deleteBook = (id)=>{
-    setBooks(books.filter(b=>b.id !== id));
-  };
 
-  const approveReturn = (id)=>{
-    setBooks(
-      books.map(b =>
-        b.id === id
-        ? {...b,status:"Available",borrowedBy:""}
-        : b
-      )
-    );
-  };
+
+
+
 
   return(
     <div className="container mt-4">
@@ -75,7 +63,7 @@ function AdminDashboard(){
           onChange={e=>setNewBook({...newBook,img:e.target.value})}
         />
 
-        <button className="btn btn-success" onClick={addBook}>
+        <button className="btn btn-success" onClick={add}>
           Add Book
         </button>
       </div>
@@ -94,15 +82,10 @@ function AdminDashboard(){
                 <p>Status: {b.status}</p>
                 {b.borrowedBy && <p>Borrowed By: {b.borrowedBy}</p>}
 
-                <button className="btn btn-danger w-100 mb-2" onClick={()=>deleteBook(b.id)}>
+                <button className="btn btn-danger w-100 mb-2" onClick={()=>deleteBook(b._id)}>
                   Delete
                 </button>
 
-                {b.status==="Borrowed" && (
-                  <button className="btn btn-warning w-100" onClick={()=>approveReturn(b.id)}>
-                    Approve Return
-                  </button>
-                )}
               </div>
             </div>
           </div>
