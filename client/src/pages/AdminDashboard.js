@@ -1,6 +1,6 @@
 import { useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { addBook,deleteBook } from "../api";
 function AdminDashboard(){
 
   const navigate = useNavigate();
@@ -8,7 +8,7 @@ function AdminDashboard(){
   useEffect(()=>{
     const role = localStorage.getItem("role");
     if(role !== "admin"){
-      alert("Only Admin Allowed");
+      
       navigate("/");
     }
   },[]);

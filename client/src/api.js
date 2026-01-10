@@ -31,7 +31,7 @@ export const returnBook = (id) =>
     method: "POST",
     headers: { Authorization: `Bearer ${token}` }
   }).then(res => res.json());
-
+//ADMIN OPERATIONs
 export const addBook = (data) =>
   fetch(`${API}/admin/add`, {
     method: "POST",
