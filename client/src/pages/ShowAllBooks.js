@@ -8,9 +8,9 @@ function ShowAllBooks() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
+    const role = localStorage.getItem("role");
     // 🔒 If not logged in → redirect to login
-    if (!token) {
+    if (role !== "user") {
       navigate("/login");
       return;
     }
