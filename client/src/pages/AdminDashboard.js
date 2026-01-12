@@ -15,7 +15,7 @@ function AdminDashboard(){
   useEffect(()=>{
     const role = localStorage.getItem("role");
     if(role !== "admin"){
-      
+      alert("only admin allow")
       navigate("/login");
     }
     getAllBooksAdmin().then(setBooks);

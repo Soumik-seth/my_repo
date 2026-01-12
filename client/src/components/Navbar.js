@@ -45,13 +45,13 @@ function Navbar() {
             )}
 
             {/* Login */}
-            {!isLoggedIn && (
+             (
               <li className="nav-item">
                 <Link className="nav-link" to="/login">
                   Login
                 </Link>
               </li>
-            )}
+            )
 
             {/* Facebook */}
             <li className="nav-item">
