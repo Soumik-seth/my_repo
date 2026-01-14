@@ -1,16 +1,26 @@
-import { Link } from "react-router-dom";
-
-
-
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function Navbar() {
-  const role = localStorage.getItem("role");
-  const isLoggedIn = localStorage.getItem("token");   // later use real auth
+  const [role, setRole] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setRole(localStorage.getItem("role"));
+    setIsLoggedIn(!!localStorage.getItem("token"));
+  }, []);
+
+  const logout = () => {
+    localStorage.clear();
+    setIsLoggedIn(false);
+    setRole(null);
+    navigate("/login");
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-
         <Link className="navbar-brand fw-bold" to="/">
           Library
         </Link>
@@ -26,17 +36,11 @@ function Navbar() {
 
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
-        
-                    {/* Go to Home page (Home page) */}
-             
-              <li className="nav-item">
-                <Link className="nav-link" to="/">
-                  Home
-                </Link>
-              </li>
-            
 
-            {/* Show All Books (only after login) */}
+            <li className="nav-item">
+              <Link className="nav-link" to="/">Home</Link>
+            </li>
+
             {isLoggedIn && (
               <li className="nav-item">
                 <Link className="nav-link" to="/books">
@@ -45,38 +49,39 @@ function Navbar() {
               </li>
             )}
 
-            {/* Login */}
-             
+            {role === "admin" && (
               <li className="nav-item">
-                <Link className="nav-link" to="/login">
-                  Login 
+                <Link className="nav-link" to="/admin">
+                  Admin
                 </Link>
               </li>
-            
+            )}
 
-            {/* Facebook */}
-            <li className="nav-item">
-              <a
-                className="nav-link"
-                href="https://facebook.com"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Facebook
-              </a>
-            </li>
-
-            {/* Contact */}
-            <li className="nav-item">
-             <Link className="nav-link" to="/Contact">
-                  Contact Us
+            {!isLoggedIn && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">
+                  Login
                 </Link>
-            </li>
+              </li>
+            )}
+
+            {isLoggedIn && (
+              <li className="nav-item">
+                <button
+                  className="btn btn-outline-danger ms-2"
+                  onClick={logout}
+                >
+                  Logout
+                </button>
+              </li>
+            )}
+
             <li className="nav-item">
-            {role==="admin" && (
-  <Link className="nav-link" to="/admin">Admin</Link>
-)}
-</li>
+              <Link className="nav-link" to="/contact">
+                Contact Us
+              </Link>
+            </li>
+
           </ul>
         </div>
       </div>
