@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-const role = localStorage.getItem("role");
+
 
 
 
 function Navbar() {
+  const role = localStorage.getItem("role");
   const isLoggedIn = localStorage.getItem("token");   // later use real auth
 
   return (
