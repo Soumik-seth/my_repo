@@ -1,6 +1,9 @@
 const API = process.env.REACT_APP_API_URL;
-const token = localStorage.getItem("token");
 
+// ✅ always get latest token
+const getToken = () => localStorage.getItem("token");
+
+// ---------- AUTH ----------
 export const login = (data) =>
   fetch(`${API}/auth/login`, {
     method: "POST",
@@ -15,29 +18,37 @@ export const registerUser = (data) =>
     body: JSON.stringify(data),
   }).then(res => res.json());
 
+// ---------- USER ----------
 export const getBooks = () =>
   fetch(`${API}/books`, {
-    headers: { Authorization: `Bearer ${token}` }
+    headers: {
+      Authorization: `Bearer ${getToken()}`
+    }
   }).then(res => res.json());
 
 export const borrowBook = (id) =>
   fetch(`${API}/books/borrow/${id}`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${token}` }
+    headers: {
+      Authorization: `Bearer ${getToken()}`
+    }
   }).then(res => res.json());
 
 export const returnBook = (id) =>
   fetch(`${API}/books/return/${id}`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${token}` }
+    headers: {
+      Authorization: `Bearer ${getToken()}`
+    }
   }).then(res => res.json());
-//ADMIN OPERATIONs
+
+// ---------- ADMIN ----------
 export const addBook = (data) =>
   fetch(`${API}/admin/add`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${getToken()}`
     },
     body: JSON.stringify(data)
   }).then(res => res.json());
@@ -45,10 +56,14 @@ export const addBook = (data) =>
 export const deleteBook = (id) =>
   fetch(`${API}/admin/${id}`, {
     method: "DELETE",
-    headers: { Authorization: `Bearer ${token}` }
+    headers: {
+      Authorization: `Bearer ${getToken()}`
+    }
   }).then(res => res.json());
 
 export const getAllBooksAdmin = () =>
   fetch(`${API}/admin/all`, {
-    headers: { Authorization: `Bearer ${token}` }
+    headers: {
+      Authorization: `Bearer ${getToken()}`
+    }
   }).then(res => res.json());

@@ -8,7 +8,7 @@ router.post('/add',auth, async(req,res)=>{
 
 });
  // for delete function
-router.post('/:id',auth,async (req,res)=>{
+router.delete('/:id',auth,async (req,res)=>{
     await Book.findByIdAndDelete(req.params.id);
     res.json({msg:"Delete"});
 });

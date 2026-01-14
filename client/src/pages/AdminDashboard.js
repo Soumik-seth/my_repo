@@ -12,14 +12,16 @@ function AdminDashboard(){
     author:"",
     img:""
   });
-  useEffect(()=>{
-    const role = localStorage.getItem("role");
-    if(role !== "admin"){
-      alert("only admin allow")
-      navigate("/login");
-    }
-    getAllBooksAdmin().then(setBooks);
-  },[]);
+useEffect(() => {
+  const role = localStorage.getItem("role");
+  if (role !== "admin") {
+    alert("Only admin allowed");
+    navigate("/login");
+    return;
+  }
+
+  getAllBooksAdmin().then(setBooks);
+}, [navigate]);
 
 
 
@@ -73,7 +75,7 @@ function AdminDashboard(){
 
       <div className="row">
         {books.map(b=>(
-          <div className="col-md-4" key={b.id}>
+          <div className="col-md-4" key={b._id}>
             <div className="card mb-3">
               <img src={b.img} className="card-img-top"/>
               <div className="card-body">

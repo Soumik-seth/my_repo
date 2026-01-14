@@ -10,7 +10,7 @@ router.get('/',auth,async(req,res)=>{
 //borrow a book
 router.post('/borrow/:id',auth,async(req,res)=>{
     await Book.findByIdAndUpdate(req.params.id,{
-        ststus:borrowed,
+        status:borrowed,
         borrowedBy:req.user.id
     });
     res.json({message:'book borrowed successfully'});
@@ -20,7 +20,7 @@ router.post('/borrow/:id',auth,async(req,res)=>{
 ////return a book
 router.post('return/:id',auth,async(req,res)=>{
     await Book.findByIdAndUpdate(req.params.id,{
-        ststus:available,
+        status:available,
         borrowedBy:""
     });
     res.json({message:'book returned successfully'});
