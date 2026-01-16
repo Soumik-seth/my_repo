@@ -39,9 +39,17 @@ useEffect(() => {
         img:""
       });
     }
+    
+
+    //delete
 
 
+    const delete1Book=async (id)=>{
+      const res=await deleteBook(id);
+   alert(res.msg);
+   setBooks(await getAllBooksAdmin());
 
+    }
 
 
 
@@ -94,7 +102,7 @@ useEffect(() => {
                 <p>Status: {b.status}</p>
                 {b.borrowedBy && <p>Borrowed By: {b.borrowedBy}</p>}
 
-                <button className="btn btn-danger w-100 mb-2" onClick={()=>deleteBook(b._id)}>
+                <button className="btn btn-danger w-100 mb-2" onClick={()=>delete1Book(b._id)}>
                   Delete
                 </button>
 
