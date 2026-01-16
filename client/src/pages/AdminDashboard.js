@@ -26,8 +26,18 @@ useEffect(() => {
 
 
   const add = async()=>{
+
+    if (! newBook.title.trim() || newBook.author.trim()){
+      alert("add title and author name ");
+    }
       await addBook(newBook);
       setBooks(await getAllBooksAdmin());
+
+      setBooks({
+        title:" ",
+        author:" ",
+        img:" "
+      });
     }
 
 
