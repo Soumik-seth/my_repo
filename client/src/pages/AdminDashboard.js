@@ -33,10 +33,10 @@ useEffect(() => {
       await addBook(newBook);
       setBooks(await getAllBooksAdmin());
 
-      setBooks({
-        title:" ",
-        author:" ",
-        img:" "
+      setNewBook({
+        title:"",
+        author:"",
+        img:""
       });
     }
 
