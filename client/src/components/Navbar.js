@@ -11,6 +11,20 @@ function Navbar() {
     setIsLoggedIn(!!localStorage.getItem("token"));
   }, []);
 
+
+  /// when local stroage update it will tigger 
+  useEffect(() => {
+  const syncAuth = () => {
+    setRole(localStorage.getItem("role"));
+    setIsLoggedIn(!!localStorage.getItem("token"));
+  };
+
+  window.addEventListener("storage", syncAuth);
+
+  return () => window.removeEventListener("storage", syncAuth);
+}, []);
+
+
   const logout = () => {
     localStorage.clear();
     setIsLoggedIn(false);
