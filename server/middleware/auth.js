@@ -1,20 +1,18 @@
-// middleware/auth.js
 const jwt = require("jsonwebtoken");
-const JWT = process.env.JWT_SECRET;
 
 module.exports = (req, res, next) => {
-  const authHeader = req.headers.authorization; // ✅ correct
+  const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(401).json({ msg: "No token" });
+    return res.status(401).json({ msg: "No token provided" });
   }
 
-  const token = authHeader.split(" ")[1]; // ✅ Bearer TOKEN
+  const token = authHeader.split(" ")[1];
 
   try {
-    req.user = jwt.verify(token, JWT);
+    req.user = jwt.verify(token, process.env.JWT_SECRET);
     next();
-  } catch (err) {
+  } catch {
     res.status(401).json({ msg: "Invalid token" });
   }
 };

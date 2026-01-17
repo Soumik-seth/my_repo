@@ -1,29 +1,31 @@
-const router = require('express').Router();
-const Book =require('../models/Book');
-const auth=require('../middleware/auth');
+const router = require("express").Router();
+const Book = require("../models/Book");
+const auth = require("../middleware/auth");
 
-//get all books
-router.get('/',auth,async(req,res)=>{
-    res.json(await Book.find());
+// ✅ Get all books (USER)
+router.get("/", auth, async (req, res) => {
+  const books = await Book.find();
+  res.json(books);
 });
 
-//borrow a book
-router.post('/borrow/:id',auth,async(req,res)=>{
-    await Book.findByIdAndUpdate(req.params.id,{
-        status:borrowed,
-        borrowedBy:req.user.id
-    });
-    res.json({message:'book borrowed successfully'});
+// ✅ Borrow book
+router.post("/borrow/:id", auth, async (req, res) => {
+  await Book.findByIdAndUpdate(req.params.id, {
+    status: "Borrowed",
+    borrowedBy: req.user.id
+  });
 
-})
-
-////return a book
-router.post('return/:id',auth,async(req,res)=>{
-    await Book.findByIdAndUpdate(req.params.id,{
-        status:available,
-        borrowedBy:""
-    });
-    res.json({message:'book returned successfully'});
+  res.json({ msg: "Book borrowed successfully" });
 });
 
-module.exports=router;
+// ✅ Return book
+router.post("/return/:id", auth, async (req, res) => {
+  await Book.findByIdAndUpdate(req.params.id, {
+    status: "Available",
+    borrowedBy: null
+  });
+
+  res.json({ msg: "Book returned successfully" });
+});
+
+module.exports = router;
