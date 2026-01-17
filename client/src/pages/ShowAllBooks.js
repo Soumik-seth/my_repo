@@ -7,9 +7,8 @@ function ShowAllBooks() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
-    // 🔒 If not logged in → redirect to login
+
     if (role !== "user") {
       navigate("/login");
       return;
@@ -20,22 +19,28 @@ function ShowAllBooks() {
 
   const handleBorrow = async (id) => {
     await borrowBook(id);
-    getBooks().then(setBooks); // refresh list
+    getBooks().then(setBooks);
   };
 
   const handleReturn = async (id) => {
     await returnBook(id);
-    getBooks().then(setBooks); // refresh list
+    getBooks().then(setBooks);
   };
 
   return (
     <div className="container mt-4">
       <h2>All Books</h2>
+
       <div className="row">
         {books.map((b) => (
           <div className="col-md-4" key={b._id}>
             <div className="card mb-3">
-              <img src={b.img} className="card-img-top" alt={b.title} />
+              <img
+                src={b.img}
+                className="card-img-top"
+                alt={b.title}
+              />
+
               <div className="card-body">
                 <h5>{b.title}</h5>
                 <p>{b.author}</p>

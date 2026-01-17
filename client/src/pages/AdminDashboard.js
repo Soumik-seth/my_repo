@@ -95,7 +95,7 @@ useEffect(() => {
         {books.map(b=>(
           <div className="col-md-4" key={b._id}>
             <div className="card mb-3">
-              <img src={b.img} className="card-img-top"/>
+               <img src={b.img} className="card-img-top" alt={b.title} />
               <div className="card-body">
                 <h5>{b.title}</h5>
                 <p>{b.author}</p>
