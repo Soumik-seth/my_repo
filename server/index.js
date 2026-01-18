@@ -23,7 +23,7 @@ app.get('/api/ping', (req, res) => res.json({ msg: 'pong' }));
 
 // routes
 app.use('/api/auth', authRoutes);
-app.use('/api/user', userRoutes);
+app.use('/api/books', userRoutes);
 app.use('/api/admin', adminRoutes);
 
 const PORT = process.env.PORT || 5000;
