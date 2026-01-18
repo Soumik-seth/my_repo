@@ -3,7 +3,7 @@ const Book = require("../models/Book");
 const auth = require("../middleware/auth");
 
 // ✅ Get all books (USER)
-router.get("/b", auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   const books = await Book.find();
   res.json(books);
 });

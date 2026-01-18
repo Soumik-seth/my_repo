@@ -20,7 +20,7 @@ export const registerUser = (data) =>
 
 // ---------- USER ----------
 export const getBooks = () =>
-  fetch(`${API}/books/b`, {
+  fetch(`${API}/books`, {
     headers: {
       Authorization: `Bearer ${getToken()}`
     }
