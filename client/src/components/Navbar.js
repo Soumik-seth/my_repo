@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {logo} from "../assets/library_log.png";
+import logo from "../assets/library_log.png";
 
 function Navbar() {
   const [role, setRole] = useState(null);
