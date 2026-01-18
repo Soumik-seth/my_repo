@@ -42,7 +42,7 @@ function Navbar() {
     alt="S Library Logo"
     style={{ height: "40px", marginRight: "10px" }}
   />
-  <span className="fw-bold">S Library</span>
+  <span className="fw-bold">Soumik Library</span>
         </Link>
 
         <button
