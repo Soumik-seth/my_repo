@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import {logo} from "../assets/library_log.png";
 
 function Navbar() {
   const [role, setRole] = useState(null);
@@ -36,7 +37,12 @@ function Navbar() {
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
         <Link className="navbar-brand fw-bold" to="/">
-          Library
+         <img
+    src={logo}
+    alt="S Library Logo"
+    style={{ height: "40px", marginRight: "10px" }}
+  />
+  <span className="fw-bold">S Library</span>
         </Link>
 
         <button
