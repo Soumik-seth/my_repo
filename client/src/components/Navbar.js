@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import logo from "../assets/library_log.png";
-
+import "./Navbar.css";
 function Navbar() {
   const [role, setRole] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,15 +34,16 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-white shadow">
       <div className="container-fluid">
-        <Link className="navbar-brand fw-bold" to="/">
+        <Link className="navbar-brand d-flex align-items-center" to="/">
          <img
     src={logo}
+
     alt="S Library Logo"
-    style={{ height: "40px", marginRight: "10px" }}
+    className="me-2 navbar-logo"
   />
-  <span className="fw-bold">Soumik Library</span>
+  <span className="brand-text text-dark">Soumik Library</span>
         </Link>
 
         <button
@@ -54,16 +55,16 @@ function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
+       <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
+          <ul className="navbar-nav mx-auto align-items-center">
 
             <li className="nav-item">
-              <Link className="nav-link" to="/">Home</Link>
+              <Link className="nav-link nav-hover" to="/">Home</Link>
             </li>
 
             {isLoggedIn && (
               <li className="nav-item">
-                <Link className="nav-link" to="/books">
+                <Link className="nav-link nav-hover" to="/books">
                   Show All Books
                 </Link>
               </li>
@@ -71,7 +72,7 @@ function Navbar() {
 
             {role === "admin" && (
               <li className="nav-item">
-                <Link className="nav-link" to="/admin">
+                <Link className="nav-link nav-hover" to="/admin">
                   Admin
                 </Link>
               </li>
@@ -79,7 +80,7 @@ function Navbar() {
 
             {!isLoggedIn && (
               <li className="nav-item">
-                <Link className="nav-link" to="/login">
+                <Link className="nav-link nav-hover" to="/login">
                   Login
                 </Link>
               </li>
@@ -87,17 +88,17 @@ function Navbar() {
 
             {isLoggedIn && (
               <li className="nav-item">
-                <button
-                  className="btn btn-outline-danger ms-2"
-                  onClick={logout}
-                >
-                  Logout
-                </button>
+    <button
+        className="btn btn-outline-warning ms-2"
+     onClick={logout}
+            >
+  Logout
+</button>
               </li>
             )}
 
             <li className="nav-item">
-              <Link className="nav-link" to="/contact">
+              <Link className="nav-link nav-hover" to="/contact">
                 Contact Us
               </Link>
             </li>
