@@ -12,7 +12,7 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <Foter/>
+      
       <Routes>
         <Route path="/" element={<Hero />} />
         <Route path="/login" element={<Login />} />
@@ -21,6 +21,7 @@ function App() {
       <Route path="/Contact" element={<Contact />} />
       <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
+      <Foter/>
     </Router>
   );
 }
