@@ -16,7 +16,7 @@ function Footer (){
       <Link to="/contact">CONTACT</Link>
          </li>
        </ul>
-
+      <p className="footer-text"> © {new Date().getFullYear()}  All rights reserved.</p>
 
             </footer>
     );
