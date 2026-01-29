@@ -9,5 +9,5 @@
   object-fit: cover;
 }
 .carousel {
-    margin: 0px;
+  margin-bottom: 0 !important;
 }
