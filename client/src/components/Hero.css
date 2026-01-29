@@ -1,0 +1,13 @@
+.carousel,
+.carousel-inner,
+.carousel-item {
+  height: 70vh;
+}
+
+.carousel-item img {
+  height: 70vh;
+  object-fit: cover;
+}
+.carousel {
+    margin: 0px;
+}

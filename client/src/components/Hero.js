@@ -1,5 +1,7 @@
+import './Hero.css';
 function Hero() {
   return (
+    
     <div
       id="carouselExampleCaptions"
       className="carousel slide"
