@@ -14,17 +14,7 @@ function Footer() {
           <Link to="/contact">CONTACT</Link>
         </li>
 
-        {/* Facebook Icon */}
-        <li>
-          <a
-            href="https://facebook.com/your-page"
-            target="_blank"
-            rel="noreferrer"
-            className="facebook-link"
-          >
-            <i className="bi bi-facebook"></i>
-          </a>
-        </li>
+       
       </ul>
 
       <p className="footer-text">
