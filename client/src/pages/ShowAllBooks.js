@@ -33,9 +33,10 @@ function ShowAllBooks() {
 
       <div className="row">
         {books.map((b) => (
-          <div className="col-md-4" key={b._id}>
+          <div className="col-md-4"  style={{ height: "420px" }} key={b._id}>
             <div className="card mb-3">
               <img
+               style={{ height: "200px", objectFit: "cover" }}
                 src={b.img}
                 className="card-img-top"
                 alt={b.title}
