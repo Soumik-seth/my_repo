@@ -29,6 +29,9 @@ function ShowAllBooks() {
 
   return (
     <div className="container mt-4">
+       <form className="form-inline my-2 my-lg-0">  
+         <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"></input>
+       </form>
       <h2>All Books</h2>
 
       <div className="row">
