@@ -13,13 +13,14 @@
     list-style-type: none;
     padding-top: 20px;
 }
-.footer-link Link {
-    color: pink;
-    text-decoration: none;
-    font-size: 18px;
+.footer-link a {
+  color: pink;
+  text-decoration: none;
+  font-size: 18px;
 }
-.footer-link Link:hover {
-    text-decoration: underline;
+
+.footer-link a:hover {
+  text-decoration: underline;
 }
 .footer-text {
     color: white;

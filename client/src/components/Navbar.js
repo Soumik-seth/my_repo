@@ -2,30 +2,30 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import logo from "../assets/library_log.png";
 import "./Navbar.css";
+
 function Navbar() {
   const [role, setRole] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
+  // ✅ Initial load
   useEffect(() => {
     setRole(localStorage.getItem("role"));
     setIsLoggedIn(!!localStorage.getItem("token"));
   }, []);
 
-
-  /// when local stroage update it will tigger 
+  // ✅ Sync auth across tabs
   useEffect(() => {
-  const syncAuth = () => {
-    setRole(localStorage.getItem("role"));
-    setIsLoggedIn(!!localStorage.getItem("token"));
-  };
+    const syncAuth = () => {
+      setRole(localStorage.getItem("role"));
+      setIsLoggedIn(!!localStorage.getItem("token"));
+    };
 
-  window.addEventListener("storage", syncAuth);
+    window.addEventListener("storage", syncAuth);
+    return () => window.removeEventListener("storage", syncAuth);
+  }, []);
 
-  return () => window.removeEventListener("storage", syncAuth);
-}, []);
-
-
+  // ✅ Logout function
   const logout = () => {
     localStorage.clear();
     setIsLoggedIn(false);
@@ -34,18 +34,20 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-white shadow">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-black shadow">
       <div className="container-fluid">
-        <Link className="navbar-brand d-flex align-items-center" to="/">
-         <img
-    src={logo}
 
-    alt="S Library Logo"
-    className="me-2 navbar-logo"
-  />
-  <span className="brand-text text-dark">Soumik Library</span>
+        {/* LOGO */}
+        <Link className="navbar-brand d-flex align-items-center" to="/">
+          <img
+            src={logo}
+            alt="Library Logo"
+            className="me-2 navbar-logo"
+          />
+          <span className="brand-text text-white">Soumik Library</span>
         </Link>
 
+        {/* TOGGLER */}
         <button
           className="navbar-toggler"
           type="button"
@@ -55,7 +57,8 @@ function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-       <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
+        {/* NAV LINKS */}
+        <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
           <ul className="navbar-nav mx-auto align-items-center">
 
             <li className="nav-item">
@@ -88,12 +91,12 @@ function Navbar() {
 
             {isLoggedIn && (
               <li className="nav-item">
-    <button
-        className="btn btn-outline-warning ms-2"
-     onClick={logout}
-            >
-  Logout
-</button>
+                <button
+                  className="btn btn-outline-warning ms-2"
+                  onClick={logout}
+                >
+                  Logout
+                </button>
               </li>
             )}
 

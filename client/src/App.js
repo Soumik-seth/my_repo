@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./index.css";
 import Navbar from "./components/Navbar";
-import Foter from "./components/Footer";
+import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Login from "./pages/Login";
 import Contact from "./pages/Contact";
@@ -21,12 +21,12 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/books" element={<ShowAllBooks />} />
-            <Route path="/Contact" element={<Contact />} />
+       <Route path="/contact" element={<Contact />} />
             <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </div>
 
-        <Foter />
+        <Footer />
       </div>
     </Router>
   );
